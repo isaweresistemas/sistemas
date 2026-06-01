@@ -1,11 +1,775 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>ISAWERE Sistemas</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISAWERE Sistemas — Sua Gestão em Outro Nível</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-deep: #050d2e;
+    --blue-mid: #0a1f6e;
+    --blue-bright: #1a5fff;
+    --blue-electric: #2d8cff;
+    --cyan: #00d4ff;
+    --gold: #f5a623;
+    --white: #ffffff;
+    --gray-light: #e8edf8;
+    --gray-soft: #b0bcd4;
+    --text-dark: #0d1b3e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--blue-deep);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    background: rgba(5,13,46,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(45,140,255,0.18);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--cyan), var(--blue-electric));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+
+  nav { display: flex; gap: 2rem; align-items: center; }
+
+  nav a {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--gray-soft); text-decoration: none;
+    letter-spacing: 0.03em; transition: color 0.25s;
+  }
+  nav a:hover { color: var(--cyan); }
+
+  .btn-contact {
+    background: linear-gradient(135deg, var(--blue-bright), var(--cyan));
+    color: #fff; padding: 0.55rem 1.4rem;
+    border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+    text-decoration: none; transition: opacity 0.25s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .btn-contact:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 70% 50%, rgba(26,95,255,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 70% at 20% 80%, rgba(0,212,255,0.10) 0%, transparent 60%),
+      linear-gradient(160deg, #050d2e 0%, #071545 60%, #050d2e 100%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(45,140,255,0.06) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(45,140,255,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 60% 50%, black, transparent);
+  }
+
+  .hero-content { position: relative; max-width: 600px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(45,140,255,0.15); border: 1px solid rgba(45,140,255,0.35);
+    padding: 0.4rem 1rem; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 500; color: var(--cyan);
+    margin-bottom: 1.5rem; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800; line-height: 1.08;
+    letter-spacing: -1.5px; margin-bottom: 1.2rem;
+  }
+
+  .hero-title .accent {
+    background: linear-gradient(135deg, var(--blue-electric), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.7; color: var(--gray-soft);
+    margin-bottom: 2rem; max-width: 480px;
+  }
+
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue-bright) 0%, var(--cyan) 100%);
+    color: #fff; padding: 0.85rem 2rem;
+    border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+    text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(26,95,255,0.45);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(26,95,255,0.55); }
+
+  .btn-secondary {
+    background: transparent; color: var(--cyan);
+    border: 1.5px solid rgba(0,212,255,0.45);
+    padding: 0.85rem 2rem; border-radius: 50px;
+    font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; transition: background 0.25s, border-color 0.25s;
+  }
+  .btn-secondary:hover { background: rgba(0,212,255,0.08); border-color: var(--cyan); }
+
+  .hero-stats {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(45,140,255,0.2);
+    border-radius: 16px; padding: 1.2rem 1.6rem;
+    backdrop-filter: blur(8px); min-width: 180px;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--white), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--gray-soft); margin-top: 0.2rem; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 90px 5%; }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--cyan);
+    margin-bottom: 0.7rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800; letter-spacing: -0.5px;
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+
+  .section-desc { color: var(--gray-soft); max-width: 520px; line-height: 1.7; }
+
+  /* ── PRODUCTS ── */
+  #products {
+    background: linear-gradient(180deg, #050d2e 0%, #071040 100%);
+  }
+
+  .products-header { text-align: center; margin-bottom: 3.5rem; }
+  .products-header .section-desc { margin: 0 auto; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(45,140,255,0.15);
+    border-radius: 20px; padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .product-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(45,140,255,0.07) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .product-card:hover { transform: translateY(-5px); border-color: rgba(45,140,255,0.4); box-shadow: 0 16px 48px rgba(26,95,255,0.18); }
+  .product-card:hover::before { opacity: 1; }
+
+  .product-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1.2rem;
+  }
+
+  .product-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+
+  .product-tagline {
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+
+  .product-desc { font-size: 0.9rem; line-height: 1.65; color: var(--gray-soft); margin-bottom: 1.4rem; }
+
+  .product-features { list-style: none; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .product-features li {
+    font-size: 0.85rem; color: var(--gray-light);
+    display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.4;
+  }
+  .product-features li::before {
+    content: '✓'; font-weight: 700; font-size: 0.8rem;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  .product-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    padding: 0.55rem 1.2rem; border-radius: 50px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .product-link:hover { opacity: 0.82; transform: translateX(2px); }
+  .product-link .arrow { transition: transform 0.2s; }
+  .product-link:hover .arrow { transform: translateX(3px); }
+
+  /* card color themes */
+  .card-blue .product-icon { background: rgba(26,95,255,0.2); }
+  .card-blue .product-tagline, .card-blue .product-features li::before { color: var(--blue-electric); }
+  .card-blue .product-link { background: rgba(26,95,255,0.18); color: var(--blue-electric); }
+
+  .card-cyan .product-icon { background: rgba(0,212,255,0.15); }
+  .card-cyan .product-tagline, .card-cyan .product-features li::before { color: var(--cyan); }
+  .card-cyan .product-link { background: rgba(0,212,255,0.12); color: var(--cyan); }
+
+  .card-gold .product-icon { background: rgba(245,166,35,0.15); }
+  .card-gold .product-tagline, .card-gold .product-features li::before { color: var(--gold); }
+  .card-gold .product-link { background: rgba(245,166,35,0.12); color: var(--gold); }
+
+  .card-green .product-icon { background: rgba(0,230,130,0.15); }
+  .card-green .product-tagline, .card-green .product-features li::before { color: #00e682; }
+  .card-green .product-link { background: rgba(0,230,130,0.12); color: #00e682; }
+
+  .card-purple .product-icon { background: rgba(160,80,255,0.15); }
+  .card-purple .product-tagline, .card-purple .product-features li::before { color: #a050ff; }
+  .card-purple .product-link { background: rgba(160,80,255,0.12); color: #a050ff; }
+
+  /* ── WHY ISAWERE ── */
+  #why {
+    background: linear-gradient(180deg, #071040 0%, #050d2e 100%);
+  }
+
+  .why-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+
+  .why-pills { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2rem; }
+  .pill {
+    padding: 0.5rem 1.1rem; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 600;
+    background: rgba(45,140,255,0.1); border: 1px solid rgba(45,140,255,0.25);
+    color: var(--cyan);
+  }
+
+  .why-benefits { display: flex; flex-direction: column; gap: 1.5rem; }
+  .benefit {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.4rem; border-radius: 16px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(45,140,255,0.12);
+    transition: border-color 0.25s;
+  }
+  .benefit:hover { border-color: rgba(45,140,255,0.3); }
+  .benefit-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(26,95,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .benefit-title { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 0.3rem; }
+  .benefit-desc { font-size: 0.88rem; color: var(--gray-soft); line-height: 1.6; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: linear-gradient(135deg, #050d2e 0%, #071545 100%);
+    position: relative; overflow: hidden;
+  }
+
+  #contact::before {
+    content: ''; position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,95,255,0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+
+  .contact-methods { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.4rem; border-radius: 14px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(45,140,255,0.15);
+    text-decoration: none; color: var(--white);
+    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+  }
+  .contact-item:hover { background: rgba(45,140,255,0.1); border-color: rgba(45,140,255,0.4); transform: translateX(4px); }
+  .contact-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .contact-label { font-size: 0.75rem; color: var(--gray-soft); letter-spacing: 0.05em; text-transform: uppercase; }
+  .contact-value { font-weight: 600; font-size: 0.95rem; }
+
+  .social-links { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .social-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 1.1rem; border-radius: 50px;
+    background: rgba(45,140,255,0.1); border: 1px solid rgba(45,140,255,0.25);
+    color: var(--cyan); font-size: 0.82rem; font-weight: 600;
+    text-decoration: none; transition: background 0.25s, border-color 0.25s;
+  }
+  .social-link:hover { background: rgba(45,140,255,0.2); border-color: var(--cyan); }
+
+  /* ── CONTACT FORM ── */
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.8rem; color: var(--gray-soft); font-weight: 500; }
+  .form-group input, .form-group select, .form-group textarea {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(45,140,255,0.2);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    transition: border-color 0.25s, background 0.25s;
+    outline: none; width: 100%;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(176,188,212,0.5); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--blue-electric); background: rgba(45,140,255,0.08);
+  }
+  .form-group select option { background: #071040; }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .btn-submit {
+    background: linear-gradient(135deg, var(--blue-bright), var(--cyan));
+    color: #fff; padding: 0.9rem 2rem;
+    border: none; border-radius: 50px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 20px rgba(26,95,255,0.4); align-self: flex-start;
+  }
+  .btn-submit:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #030a1e;
+    border-top: 1px solid rgba(45,140,255,0.12);
+    padding: 2rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-left { font-size: 0.85rem; color: var(--gray-soft); }
+  .footer-left span { color: var(--cyan); font-weight: 600; }
+
+  .ceo-badge {
+    display: flex; align-items: center; gap: 0.7rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(45,140,255,0.2);
+    padding: 0.6rem 1.2rem; border-radius: 50px;
+  }
+  .ceo-badge .ceo-icon { font-size: 1.1rem; }
+  .ceo-text { font-size: 0.8rem; color: var(--gray-soft); }
+  .ceo-name {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.9rem; color: var(--white);
+  }
+  .ceo-title { font-size: 0.72rem; color: var(--cyan); letter-spacing: 0.05em; }
+
+  /* ── DIVIDER STRIPE ── */
+  .stripe {
+    height: 1px; background: linear-gradient(90deg, transparent, rgba(45,140,255,0.3), transparent);
+    margin: 0 5%;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-stats { display: none; }
+    .why-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    nav { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+</style>
 </head>
 <body>
-    <h1>Bem-vindo ao ISAWERE Sistemas</h1>
-    <p>Site em construção. Aguarde nossas novidades!</p>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-text">ISAWERE</div>
+  <nav>
+    <a href="#products">Sistemas</a>
+    <a href="#why">Por que ISAWERE</a>
+    <a href="#contact">Contato</a>
+  </nav>
+  <a class="btn-contact" href="#contact">Fale Conosco</a>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content reveal">
+    <div class="hero-badge"><span></span>Sistemas Web Modernos & Completos</div>
+    <h1 class="hero-title">
+      Sua gestão em<br><span class="accent">outro nível.</span>
+    </h1>
+    <p class="hero-sub">
+      Desenvolvemos sistemas web seguros, modernos e intuitivos para saúde, educação e muito mais — feitos para otimizar sua rotina e transformar resultados.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#products">Conheça os Sistemas</a>
+      <a class="btn-secondary" href="#contact">Falar com a equipe</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card reveal">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Sistemas desenvolvidos</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Web — acesse de qualquer lugar</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-num">🔒</div>
+      <div class="stat-label">Dados seguros com backup diário</div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe"></div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-header reveal">
+    <div class="section-label">Nossos Produtos</div>
+    <h2 class="section-title">Soluções para cada área</h2>
+    <p class="section-desc">Cada sistema foi criado com foco em simplicidade, eficiência e resultado. Escolha o que resolve o seu desafio.</p>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- AGENDAMENTOS MÉDICOS -->
+    <div class="product-card card-blue reveal">
+      <div class="product-icon">🩺</div>
+      <div class="product-name">ISAWERE Agendamentos</div>
+      <div class="product-tagline">Consultas & Exames Médicos</div>
+      <p class="product-desc">Gerencie filas, consultas e exames de forma simples, rápida e organizada — tudo em uma plataforma moderna e acessível para equipes de saúde.</p>
+      <ul class="product-features">
+        <li>Cadastro ágil de pacientes e encaminhamentos</li>
+        <li>Agendamentos individuais ou em lote</li>
+        <li>Comprovantes e listas para impressão</li>
+        <li>Relatórios e indicadores em tempo real</li>
+        <li>Envio de informações de agendamento por mensagem</li>
+      </ul>
+      <a class="product-link" href="https://www.youtube.com/watch?v=2AMZonJVXHM" target="_blank">
+        ▶ Ver demonstração <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- PRÁTICO ESCOLAR -->
+    <div class="product-card card-cyan reveal">
+      <div class="product-icon">🏫</div>
+      <div class="product-name">Prático Escolar</div>
+      <div class="product-tagline">Secretaria & Gestão Escolar</div>
+      <p class="product-desc">Um sistema completo para toda a secretaria escolar — muito além das matrículas. Reúne em um único lugar as rotinas administrativas e pedagógicas do dia a dia.</p>
+      <ul class="product-features">
+        <li>Atestados, calendário e planejamentos</li>
+        <li>Comunicação interna entre professores e gestão</li>
+        <li>Plantão pedagógico e listas de alunos</li>
+        <li>Relatórios e indicadores gerenciais</li>
+        <li>Acesso responsivo: computador, tablet ou celular</li>
+      </ul>
+      <a class="product-link" href="https://www.youtube.com/watch?v=LX8vJSsw6xY" target="_blank">
+        ▶ Ver demonstração <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- PRONTUÁRIO ELETRÔNICO -->
+    <div class="product-card card-gold reveal">
+      <div class="product-icon">📋</div>
+      <div class="product-name">Prontuário Eletrônico</div>
+      <div class="product-tagline">Gestão de Clínicas</div>
+      <p class="product-desc">Administrar uma clínica ficou mais simples. Encontre pacientes em segundos, acesse históricos completos e acompanhe faturamento automaticamente.</p>
+      <ul class="product-features">
+        <li>Cadastro com filtros inteligentes de pacientes</li>
+        <li>Histórico completo em uma única tela</li>
+        <li>Agenda visual e prática para toda a equipe</li>
+        <li>Faturamento e indicadores financeiros automáticos</li>
+        <li>Relatórios para decisões mais seguras</li>
+      </ul>
+      <a class="product-link" href="https://www.youtube.com/watch?v=Psy84PUhwu8" target="_blank">
+        ▶ Ver demonstração <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- GESTÃO DE CASAMENTOS -->
+    <div class="product-card card-purple reveal">
+      <div class="product-icon">💍</div>
+      <div class="product-name">Gestão de Casamentos</div>
+      <div class="product-tagline">Eventos & Festas</div>
+      <p class="product-desc">Organize cada detalhe do grande dia com tecnologia. Do controle de convidados aos presentes, da geração de senhas às etapas do evento — tudo centralizado.</p>
+      <ul class="product-features">
+        <li>Geração e gerenciamento de senhas do evento</li>
+        <li>Lista de presentes com controle de entrega</li>
+        <li>Etapas e checklist completo da festa</li>
+        <li>Confirmação de presença de convidados</li>
+        <li>Painel visual para a equipe organizadora</li>
+      </ul>
+      <a class="product-link" href="#contact">
+        Solicitar informações <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- PAINEL EDUCACIONAL -->
+    <div class="product-card card-green reveal">
+      <div class="product-icon">🎮</div>
+      <div class="product-name">Painel Educacional</div>
+      <div class="product-tagline">Jogos & Softwares Educativos</div>
+      <p class="product-desc">Um ambiente digital rico em recursos pedagógicos interativos — jogos educacionais e ferramentas de aprendizagem que tornam o estudo mais envolvente e eficaz.</p>
+      <ul class="product-features">
+        <li>Jogos educacionais variados por disciplina</li>
+        <li>Interface intuitiva para alunos de todas as idades</li>
+        <li>Acompanhamento de progresso e desempenho</li>
+        <li>Acesso web sem instalação necessária</li>
+        <li>Integração com a rotina escolar</li>
+      </ul>
+      <a class="product-link" href="#contact">
+        Solicitar informações <span class="arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<div class="stripe"></div>
+
+<!-- WHY ISAWERE -->
+<section id="why">
+  <div class="why-inner">
+    <div class="reveal">
+      <div class="section-label">Por que ISAWERE</div>
+      <h2 class="section-title">Tecnologia que resolve de verdade.</h2>
+      <p class="section-desc">Nossos sistemas são criados com foco em quem usa no dia a dia — simples, rápidos e acessíveis de qualquer navegador, sem instalação.</p>
+      <div class="why-pills">
+        <div class="pill">100% Web</div>
+        <div class="pill">Sem instalação</div>
+        <div class="pill">Dados seguros</div>
+        <div class="pill">Suporte ágil</div>
+        <div class="pill">Atualizações inclusas</div>
+        <div class="pill">Multi-dispositivo</div>
+      </div>
+    </div>
+    <div class="why-benefits">
+      <div class="benefit reveal">
+        <div class="benefit-icon">⚡</div>
+        <div>
+          <div class="benefit-title">Agilidade no dia a dia</div>
+          <div class="benefit-desc">Interfaces intuitivas projetadas para quem precisa de velocidade — encontre, cadastre e gerencie em poucos cliques.</div>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="benefit-icon">🔒</div>
+        <div>
+          <div class="benefit-title">Segurança e confiabilidade</div>
+          <div class="benefit-desc">Seus dados são protegidos com tecnologia de ponta e backup diário. Acesso seguro de qualquer lugar.</div>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="benefit-icon">📊</div>
+        <div>
+          <div class="benefit-title">Decisões baseadas em dados</div>
+          <div class="benefit-desc">Relatórios e indicadores automáticos para acompanhar resultados e tomar decisões com mais segurança.</div>
+        </div>
+      </div>
+      <div class="benefit reveal">
+        <div class="benefit-icon">🌐</div>
+        <div>
+          <div class="benefit-title">Acesso de qualquer lugar</div>
+          <div class="benefit-desc">Sistema 100% web, responsivo — computador, tablet ou celular, sem instalação ou configuração.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-label">Entre em Contato</div>
+      <h2 class="section-title">Vamos conversar sobre o seu projeto?</h2>
+      <p class="section-desc">Nossa equipe está pronta para apresentar a solução ideal para a sua realidade. Sem complicação.</p>
+
+      <div class="contact-methods">
+        <a class="contact-item" href="https://wa.me/5583996750560" target="_blank">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-label">WhatsApp</div>
+            <div class="contact-value">(83) 99675-0560</div>
+          </div>
+        </a>
+        <a class="contact-item" href="mailto:isaweresistemas@gmail.com">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">E-mail</div>
+            <div class="contact-value">isaweresistemas@gmail.com</div>
+          </div>
+        </a>
+        <a class="contact-item" href="https://www.isawere.com.br" target="_blank">
+          <div class="contact-icon">🌐</div>
+          <div>
+            <div class="contact-label">Site</div>
+            <div class="contact-value">www.isawere.com.br</div>
+          </div>
+        </a>
+        <a class="contact-item" href="#" style="pointer-events: none;">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Localização</div>
+            <div class="contact-value">Campina Grande — PB</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="social-links">
+        <a class="social-link" href="https://www.youtube.com/@IsawereSistemas" target="_blank">▶ YouTube</a>
+        <a class="social-link" href="https://www.linkedin.com/company/isawere-sistemas" target="_blank">in LinkedIn</a>
+        <a class="social-link" href="https://wa.me/5583996750560" target="_blank">💬 WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(45,140,255,0.18); border-radius: 20px; padding: 2rem;">
+        <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:1.15rem; margin-bottom:1.4rem;">Solicite uma demonstração</div>
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" placeholder="Seu nome completo">
+            </div>
+            <div class="form-group">
+              <label>Telefone / WhatsApp</label>
+              <input type="tel" placeholder="(83) 99999-9999">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" placeholder="seu@email.com">
+          </div>
+          <div class="form-group">
+            <label>Sistema de interesse</label>
+            <select>
+              <option value="">Selecione um sistema...</option>
+              <option>ISAWERE Agendamentos Médicos</option>
+              <option>Prático Escolar</option>
+              <option>Prontuário Eletrônico para Clínicas</option>
+              <option>Gestão de Casamentos</option>
+              <option>Painel Educacional</option>
+              <option>Tenho interesse em mais de um</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mensagem (opcional)</label>
+            <textarea placeholder="Conte um pouco sobre sua necessidade..."></textarea>
+          </div>
+          <button class="btn-submit" onclick="handleFormSubmit(this)">Enviar via WhatsApp →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    © 2025 <span>ISAWERE Sistemas</span>. Todos os direitos reservados.<br>
+    <span style="font-size:0.78rem; color: rgba(176,188,212,0.6);">Sistemas web modernos, seguros e completos para sua empresa ou instituição.</span>
+  </div>
+
+  <div class="ceo-badge">
+    <div class="ceo-icon">👤</div>
+    <div>
+      <div class="ceo-text">Fundador & CEO</div>
+      <div class="ceo-name">Ivan Rosas</div>
+      <div class="ceo-title">ISAWERE Sistemas</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Form → WhatsApp
+  function handleFormSubmit(btn) {
+    const nome = document.querySelector('input[placeholder="Seu nome completo"]').value.trim();
+    const tel = document.querySelector('input[placeholder="(83) 99999-9999"]').value.trim();
+    const email = document.querySelector('input[placeholder="seu@email.com"]').value.trim();
+    const sistema = document.querySelector('select').value;
+    const msg = document.querySelector('textarea').value.trim();
+
+    if (!nome || !sistema) {
+      alert('Por favor, preencha seu nome e o sistema de interesse.');
+      return;
+    }
+
+    const texto = `Olá! Gostaria de saber mais sobre o sistema *ISAWERE Sistemas*.
+
+👤 *Nome:* ${nome}
+📞 *Telefone:* ${tel || 'Não informado'}
+📧 *E-mail:* ${email || 'Não informado'}
+💻 *Sistema de interesse:* ${sistema}
+${msg ? `📝 *Mensagem:* ${msg}` : ''}
+
+Vi o site e gostaria de agendar uma demonstração!`;
+
+    const url = `https://wa.me/5583996750560?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+  }
+</script>
 </body>
 </html>
